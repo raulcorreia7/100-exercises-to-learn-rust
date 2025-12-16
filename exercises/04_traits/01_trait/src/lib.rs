@@ -7,7 +7,9 @@ trait IsEven {
     fn IsEven(self) -> bool;
 }
 
-impl IsEven {}
+impl IsEven for u32 {
+    fn IsEven(self) -> bool {}
+}
 #[cfg(test)]
 mod tests {
     use super::*;

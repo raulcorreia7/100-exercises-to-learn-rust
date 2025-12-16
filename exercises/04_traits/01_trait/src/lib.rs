@@ -3,6 +3,11 @@
 //
 // Then implement the trait for `u32` and `i32`.
 
+trait IsEven {
+    fn IsEven(self) -> bool;
+}
+
+impl IsEven {}
 #[cfg(test)]
 mod tests {
     use super::*;

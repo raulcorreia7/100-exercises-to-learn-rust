@@ -11,3 +11,69 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+
+use core::panic;
+
+pub struct Order {
+    pub product_name: String,
+    pub quantity: i64,
+    pub unit_price: i64,
+}
+
+impl Order {
+    pub fn new(product_name: String, quantity: i64, unit_price: i64) -> Order {
+        let mut order = Self::empty();
+        order.set_product_name(&product_name);
+        order.set_quantity(quantity);
+        order.set_unit_price(unit_price);
+
+        order
+    }
+
+    pub fn empty() -> Order {
+        Order {
+            product_name: String::default(),
+            quantity: i64::default(),
+            unit_price: i64::default(),
+        }
+    }
+
+    pub fn quantity(&self) -> &i64 {
+        &self.quantity
+    }
+
+    pub fn product_name(&self) -> &str {
+        &self.product_name
+    }
+
+    pub fn unit_price(&self) -> &i64 {
+        &self.unit_price
+    }
+
+    pub fn total(&self) -> i64 {
+        self.quantity * self.unit_price
+    }
+
+    pub fn set_product_name(&mut self, product_name: &String) {
+        if product_name.is_empty() || product_name.len() > 300 {
+            panic!("Product name is invalid")
+        }
+
+        self.product_name = product_name.into()
+    }
+
+    pub fn set_quantity(&mut self, quantity: i64) {
+        if !quantity.is_positive() {
+            panic!("Quantity cannot be negative")
+        }
+        self.quantity = quantity
+    }
+
+    pub fn set_unit_price(&mut self, unit_price: i64) {
+        if !unit_price.is_positive() {
+            panic!("Unit price needs to be positive")
+        }
+
+        self.unit_price = unit_price
+    }
+}

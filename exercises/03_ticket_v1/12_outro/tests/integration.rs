@@ -13,7 +13,15 @@ fn test_order() {
     assert_eq!(order.unit_price(), &2999);
     assert_eq!(order.total(), 8997);
 
-    order.set_product_name("Rust Book".to_string());
+    {
+        let this = &mut order;
+        let product_name = "Rust Book".to_string();
+        if product_name.is_empty() && product_name.len() > 300 {
+            panic!("Product name is invalid")
+        }
+
+        this.product_name = product_name.into()
+    };
     order.set_quantity(2);
     order.set_unit_price(3999);
 

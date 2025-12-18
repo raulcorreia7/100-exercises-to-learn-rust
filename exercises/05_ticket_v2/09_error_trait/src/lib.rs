@@ -3,17 +3,36 @@
 //  The docs for the `std::fmt` module are a good place to start and look for examples:
 //  https://doc.rust-lang.org/std/fmt/index.html#write
 
+use std::{error::Error, fmt};
+
+#[derive(Debug)]
 enum TicketNewError {
     TitleError(String),
     DescriptionError(String),
 }
-
+impl Error for TicketNewError {}
+impl fmt::Display for TicketNewError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            TicketNewError::TitleError(s) | TicketNewError::DescriptionError(s) => {
+                write!(f, "{}", s)
+            }
+        }
+    }
+}
 // TODO: `easy_ticket` should panic when the title is invalid, using the error message
 //   stored inside the relevant variant of the `TicketNewError` enum.
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    Ticket::new(title.clone(), description.clone(), status.clone()).unwrap_or_else(
+        |msg| match msg {
+            TicketNewError::DescriptionError(s) => {
+                Ticket::new(title, "Description not provided".into(), status).unwrap()
+            }
+            TicketNewError::TitleError(s) => panic!("{}", s),
+        },
+    )
 }
 
 #[derive(Debug, PartialEq, Clone)]

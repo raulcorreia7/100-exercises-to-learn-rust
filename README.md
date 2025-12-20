@@ -30,6 +30,21 @@ to get started with the course.
   - [Visual Studio Code](https://code.visualstudio.com) with
     the [`rust-analyzer`](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer) extension.
 
+## Repo-local git identity
+
+If you're working across multiple machines, you can set your git identity for this
+repository only:
+
+```bash
+./scripts/setup-git-identity.sh
+```
+
+You can also run it non-interactively:
+
+```bash
+GIT_USER_NAME="Your Name" GIT_USER_EMAIL="you@example.com" ./scripts/setup-git-identity.sh
+```
+
 ## Solutions
 
 You can find the solutions to the exercises in

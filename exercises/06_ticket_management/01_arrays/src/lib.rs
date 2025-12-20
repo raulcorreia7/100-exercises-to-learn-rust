@@ -1,30 +1,42 @@
 // TODO: Flesh out the `WeekTemperatures` struct and its method implementations to pass the tests.
-
+#[derive(Debug, Clone)]
 pub struct WeekTemperatures {
-    // TODO
+    pub days: [Option<i32>; 7],
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub enum Weekday {
+    Sunday = 0,
     Monday,
     Tuesday,
     Wednesday,
     Thursday,
     Friday,
     Saturday,
-    Sunday,
+}
+
+pub fn weekday_to_idx(day: Weekday) -> usize {
+    match day {
+        Weekday::Sunday => 0,
+        Weekday::Monday => 1,
+        Weekday::Tuesday => 2,
+        Weekday::Wednesday => 3,
+        Weekday::Thursday => 4,
+        Weekday::Friday => 5,
+        Weekday::Saturday => 6,
+    }
 }
 
 impl WeekTemperatures {
     pub fn new() -> Self {
-        todo!()
+        Self { days: [None; 7] }
     }
 
     pub fn get_temperature(&self, day: Weekday) -> Option<i32> {
-        todo!()
+        self.days[weekday_to_idx(day)]
     }
-
     pub fn set_temperature(&mut self, day: Weekday, temperature: i32) {
-        todo!()
+        self.days[weekday_to_idx(day)] = Some(temperature)
     }
 }
 

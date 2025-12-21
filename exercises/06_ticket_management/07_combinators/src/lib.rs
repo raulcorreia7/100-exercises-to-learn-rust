@@ -21,6 +21,16 @@ pub enum Status {
     Done,
 }
 
+impl<'a> IntoIterator for &'a TicketStore {
+    type Item = &'a Ticket;
+
+    type IntoIter = std::slice::Iter<'a, Ticket>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.tickets.iter()
+    }
+}
+
 impl TicketStore {
     pub fn new() -> Self {
         Self {
@@ -30,6 +40,12 @@ impl TicketStore {
 
     pub fn add_ticket(&mut self, ticket: Ticket) {
         self.tickets.push(ticket);
+    }
+
+    pub fn to_dos(&self) -> Vec<&Ticket> {
+        self.into_iter()
+            .filter(|&t| t.status == Status::ToDo)
+            .collect()
     }
 }
 

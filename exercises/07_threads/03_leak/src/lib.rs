@@ -9,8 +9,8 @@ pub fn sum(v: Vec<i32>) -> i32 {
     let slice = v.leak();
     let (left, right) = slice.split_at(slice.len() / 2);
 
-    let t1 = std::thread::spawn(|| left.iter().sum::<i32>());
-    let t2 = std::thread::spawn(|| right.iter().sum::<i32>());
+    let t1 = thread::spawn(move || left.iter().sum::<i32>());
+    let t2 = thread::spawn(move || right.iter().sum::<i32>());
 
     t1.join().unwrap() + t2.join().unwrap()
 }

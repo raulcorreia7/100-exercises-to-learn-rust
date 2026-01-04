@@ -19,11 +19,11 @@ impl TicketStoreClient {
         let (sender, receiver) = sync_channel(1);
 
         self.sender
-            .send(Command::Insert {
+            .try_send(Command::Insert {
                 draft,
                 response_channel: sender,
             })
-            .unwrap();
+            .map_err(MyError)?;
 
         let id = receiver.recv().unwrap();
         Ok(id)
@@ -33,11 +33,11 @@ impl TicketStoreClient {
         let (sender, receiver) = sync_channel(1);
 
         self.sender
-            .send(Command::Get {
+            .try_send(Command::Get {
                 id,
                 response_channel: sender,
             })
-            .unwrap();
+            .map_err(MyError)?;
         let ticket = receiver.recv().unwrap();
         Ok(ticket)
     }

@@ -5,3 +5,8 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
+thiserror = "2.0.17"
+
+[dependencies.rocket]
+version = "0.5.1"
+features = ["json"]

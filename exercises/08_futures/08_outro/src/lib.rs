@@ -8,3 +8,9 @@
 //
 // Use Rust's package registry, crates.io, to find the dependencies you need
 // (if any) to build this system.
+
+pub mod data;
+mod routes;
+pub mod store;
+
+pub use routes::{create_ticket, get_ticket, index, patch_ticket};
